@@ -63,16 +63,6 @@ const page = () => {
           <p className="text-gray-600">Colaboradora</p>
         </div>
 
-        {/* Tarjeta 6 - Zaira (Desarrollador) */}
-        <div className="bg-white rounded-lg shadow-md p-4 text-center">
-          <img
-            src="https://via.placeholder.com/150" // Reemplaza con la imagen real
-            alt="Zaira"
-            className="w-20 h-20 rounded-full mx-auto mb-2"
-          />
-          <h2 className="text-xl font-semibold">Zaira</h2>
-          <p className="text-gray-600">Desarrollador</p>
-        </div>
       </div>
     </div>
   );
