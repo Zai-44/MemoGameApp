@@ -17,7 +17,7 @@ export function BotonCredit({
         onClick={onClick}
         className={`rounded-full w-14 h-14 p-0 shadow-lg ${className}`}
       >
-        {icon}
+            <span className='text-2xl font-bold'>C</span>
       </Button>
     </div>
   );

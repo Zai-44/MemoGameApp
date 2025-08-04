@@ -1,72 +1,64 @@
-import { Button } from '@/components/ui/button';
-import { Video } from 'lucide-react';
-import Image from 'next/image';
+import { Button } from "@/components/ui/button";
+import { BotonCredit } from "./BotonCredit";
 
 interface GameCardProps {
-  backgroundImage: string;
   onPlayClick: () => void;
   onRankingClick: () => void;
 }
 
-export function GameCard({
-  backgroundImage,
-  onPlayClick,
-  onRankingClick,
-}: GameCardProps) {
+export function GameCard({ onPlayClick, onRankingClick }: GameCardProps) {
   return (
-    <div 
-      className="relative w-full max-w-2xl h-135 overflow-hidden"
-    >
+    <div className="relative w-full max-w-2xl h-[600px] overflow-hidden"> 
       {/* Fondo de la card */}
-      <div className="absolute inset-0">
-        <Image
-          src="/MemoGameApp.png"
-          alt="Memorama background"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/0" />
-      </div>
+      <div className="absolute inset-0 bg-white/1 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl" />
+          {/* backdrop-blur-md/xl */}
+
 
       {/* Contenido de la card */}
-      <div className="relative z-10 h-full flex flex-col items-start pt-18 p-20">
-        <h1 className="text-4xl italic font-bold text-white mb-10 text-center" 
-            style={{ fontFamily:"'Pacifico', cursive", color: '#657d4b' }}>
+      <div className="relative z-10 h-full flex flex-col  pt-18 p-20 justify-center ">
+        <h1
+          className="text-6xl italic font-bold text-black mb-6 text-center"
+          style={{ fontFamily: "'Pacifico', cursive", color: "#657d4b" }}
+        >
           MemoGameApp
         </h1>
 
         {/* Botones */}
-        <div className="flex flex-col sm:flex-col gap-7 w-80 justify-center">
-
-          <Button 
+        <div className="flex items-center gap-3 ml-24 mt-19">
+          
+          {/* Botón Comenzar */}
+          <video
+            src="/video/arrow.mp4"
+            autoPlay
+            loop
+            muted
+            width={80}
+            height={80}
+            className="mr-2"
+          />
+          <Button
             onClick={onPlayClick}
-            className="bg-white hover:bg-white/20 py-8 text-2xl text-black font-semibold" 
-            style={{  color: '#657d4b' }}
-          > 
-            <Video 
-              src="public/flechaDer.mp4"
-              alt="Cómo jugar" 
-              width={20} 
-              height={20} 
-              className="mr-2"
-              muted
-              autoPlay
-              loop
-              playsInline
-            />
-
+            className="bg-white hover:bg-white/20 py-9 text-3xl text-black font-semibold "
+            style={{ color: "#657d4b" }}
+          >
             <span>Comenzar</span>
           </Button>
-          
-          <Button 
+        </div>
+
+          {/* Botón Ranking */}
+        <div className="flex flex-col sm:flex-col py-8 w-80 ml-18">
+          <Button
             variant="outline"
             onClick={onRankingClick}
-            className="bg-white/10 hover:bg-white/40 px-6 py-8 text-2xl font-semibold"
-          >           
+            className="bg-white/10 hover:bg-white/40 py-9 text-3xl font-semibold"
+            style={{ color: "#657d4b" }}
+          >
             <span>Ranking</span>
           </Button>
         </div>
+
+
+
       </div>
     </div>
   );
