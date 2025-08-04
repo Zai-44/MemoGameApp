@@ -1,65 +1,99 @@
-import { Button } from "@/components/ui/button";
-import { BotonCredit } from "./BotonCredit";
+// components/GameCard.tsx
+'use client';
+import { FaArrowCircleRight } from "react-icons/fa";
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import Card from './Card';
 
-interface GameCardProps {
-  onPlayClick: () => void;
-  onRankingClick: () => void;
-}
+export function GameCard() {
+  const router = useRouter();
 
-export function GameCard({ onPlayClick, onRankingClick }: GameCardProps) {
   return (
-    <div className="relative w-full max-w-2xl h-[600px] overflow-hidden"> 
-      {/* Fondo de la card */}
-      <div className="absolute inset-0 bg-white/1 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl" />
-          {/* backdrop-blur-md/xl */}
-
-
-      {/* Contenido de la card */}
-      <div className="relative z-10 h-full flex flex-col  pt-18 p-20 justify-center ">
-        <h1
-          className="text-6xl italic font-bold text-black mb-6 text-center"
-          style={{ fontFamily: "'Pacifico', cursive", color: "#657d4b" }}
+    <Card>
+      <div className="h-full flex flex-col justify-center p-10">
+        {/* Título con efectos especiales */}
+        <motion.div
+          className="mb-10 text-center"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ 
+            delay: 0.2,
+            duration: 0.6,
+            type: 'spring',
+            stiffness: 100
+          }}
         >
-          MemoGameApp
-        </h1>
-
-        {/* Botones */}
-        <div className="flex items-center gap-3 ml-24 mt-19">
-          
-          {/* Botón Comenzar */}
-          <video
-            src="/video/arrow.mp4"
-            autoPlay
-            loop
-            muted
-            width={80}
-            height={80}
-            className="mr-2"
-          />
-          <Button
-            onClick={onPlayClick}
-            className="bg-white hover:bg-white/20 py-9 text-3xl text-black font-semibold "
-            style={{ color: "#657d4b" }}
+          <motion.h1
+            className="text-7xl"
+            style={{ 
+              fontFamily: "Anta", 
+              color: "#FFFFFF",
+              textShadow: "3px 3px 0 #000000, 6px 6px 0 #000000, 8px 8px 15px rgba(0,0,0,0.9)"
+            }}
+            whileHover={{ 
+              scale: 1.03,
+            }}>
+            MemoGameApp
+          </motion.h1>
+        </motion.div>
+        {/* Contenedor de botones */}
+        <div className="space-y-8 w-full max-w-70 mx-auto">
+          {/* Botón Comenzar con efectos mejorados */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
           >
-            <span>Comenzar</span>
-          </Button>
-        </div>
-
+            <motion.button
+              onClick={() => router.push('/game')}
+              className="w-full flex items-center justify-center py-5 px-8 rounded-xl text-3xl font-bold relative overflow-hidden"
+              style={{ 
+                backgroundColor: '#960000',
+                border: '2px solid #4A0000'
+              }}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: '0 0 15px rgba(101, 125, 75, 0.7)'
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <motion.span
+                className="absolute left-4"
+                initial={{ x: -10, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.8 }}
+              >
+              </motion.span>
+              <span className="mr-4">¡Juega Ya!</span>
+              <FaArrowCircleRight size="1.3em" />
+            </motion.button>
+          </motion.div>
           {/* Botón Ranking */}
-        <div className="flex flex-col sm:flex-col py-8 w-80 ml-18">
-          <Button
-            variant="outline"
-            onClick={onRankingClick}
-            className="bg-white/10 hover:bg-white/40 py-9 text-3xl font-semibold"
-            style={{ color: "#657d4b" }}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
           >
-            <span>Ranking</span>
-          </Button>
+            <motion.button
+              onClick={() => router.push('/ranking')}
+              className="py-2 rounded-xl text-3xl ml-80"
+              style={{ 
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                border: '2px solid',
+                backdropFilter: 'blur(5px)'
+              }}
+              whileHover={{ 
+                scale: 1.05,
+                backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                boxShadow: '0 0 10px rgba(101, 125, 75, 0.5)'
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Ranking
+            </motion.button>
+          </motion.div>
         </div>
-
-
-
       </div>
-    </div>
+    </Card>
   );
 }
