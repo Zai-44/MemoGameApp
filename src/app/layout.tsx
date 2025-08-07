@@ -1,32 +1,28 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Anta } from 'next/font/google';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const anta = Anta({ 
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-anta'
 });
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Memorama App",
-  description: "Una colaboración de Diseño Gráfico e Ingeniería en Sistema",
+  title: 'MemoGameApp - Juego de Memoria',
+  description: 'Un divertido juego de memoria con cartas animadas',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="es">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="es" className={`${anta.variable}`}> 
+      <body className={`${inter.className} bg-black min-h-screen`}>
         {children}
       </body>
     </html>
