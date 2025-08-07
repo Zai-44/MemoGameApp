@@ -3,7 +3,7 @@
 import { FaArrowCircleRight } from "react-icons/fa";
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import Card from './Card';
+import Card from '@/components/Card';
 
 export function GameCard() {
   const router = useRouter();

@@ -16,8 +16,8 @@ const SoundController = () => {
     const [autoplayError, setAutoplayError] = useState(false);
     const [alertVisible, setAlertVisible] = useState(true);
 
-    const playClickSound = () => {
-        const clickSound = new Audio('/sounds/bubblePop.mp3');
+    const playClickSound = () => { 
+        const clickSound = new Audio('sounds/bubblePop.mp3');
         clickSound.play();
     };
 

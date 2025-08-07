@@ -1,8 +1,9 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import SoundController from '../components/SoundController';
+import SoundController from '@/components/SoundController';
 
+SoundController
 const Page = () => {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -58,6 +59,7 @@ const Page = () => {
     >
       <SoundController />
 
+      {/* Botón de volver */}
       <button
         onClick={() => {
           playSound();

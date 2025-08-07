@@ -3,8 +3,8 @@
 
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import Card from '../components/Card';
-import AnimatedBackground from '../components/AnimatedBackground';
+import Card from '@/components/Card';
+import AnimatedBackground from '../../components/AnimatedBackground';
 
 export default function GamePage() {
   const router = useRouter();
