@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+/* Fondo que se desplaza verticalmente de forma infinita */
+@keyframes scrollUp {
+    0% {
+        background-position: center 100%;
+    }
+    100% {
+        background-position: center 0%;
+    }
+}
+
+.bg-scroll-up-down {
+    background-repeat: repeat-y;
+    background-size: cover;
+    animation: scrollUp 30s linear infinite;
+}
