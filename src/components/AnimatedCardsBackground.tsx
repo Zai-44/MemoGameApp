@@ -34,7 +34,6 @@ export const AnimatedCardsBackground = () => {
       '/images/10.png',
       '/images/11.png',
       '/images/12.png',
-      '/images/13.png',
     ];
 
     // Generar posiciones aleatorias para las cartas
@@ -86,7 +85,7 @@ export const AnimatedCardsBackground = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }} 
-      className="fixed inset-0 overflow-hidden bg-amber-200"
+      className="fixed inset-0 overflow-hidden bg-blue-300"
     >
       {cards.map(card => (
         <motion.div
