@@ -34,7 +34,6 @@ export const AnimatedCardsBackground = () => {
       '/images/10.png',
       '/images/11.png',
       '/images/12.png',
-      '/images/13.png',
     ];
 
     // Generar posiciones aleatorias para las cartas
