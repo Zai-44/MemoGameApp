@@ -30,15 +30,8 @@ export default function Card({
         {/* Imagen de fondo */}
         <div 
           className="absolute inset-0 bg-[url('/images/Fondo.jpg')] bg-center"
-          style={{
-            maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)'
-          }}
         />
         
-        {/* Degradado azul superior */}
-        <div 
-          className="absolute inset-0 bg-gradient-to-b from-blue-600/10 to-transparent"
-        />
         
         {/* Capa de vidrio esmerilado */}
         <div className="absolute inset-0   border- border-blue-950" />

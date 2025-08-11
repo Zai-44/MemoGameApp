@@ -86,7 +86,7 @@ export const AnimatedCardsBackground = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }} 
-      className="fixed inset-0 overflow-hidden bg-amber-200"
+      className="fixed inset-0 overflow-hidden bg-blue-300"
     >
       {cards.map(card => (
         <motion.div
