@@ -36,8 +36,8 @@ export function BotonInstrucciones({
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[60]">
           <div className="bg-white rounded-lg p-4 max-w-3xl max-h-[90vh] overflow-auto">
-            <img
-              src="/instrucciones.jpg" // Coloca aquí la ruta pública de tu imagen
+            <image
+              src="images/instrucciones.jpg" // Coloca aquí la ruta pública de tu imagen
               alt="Instrucciones"
               className="rounded-lg"
             />

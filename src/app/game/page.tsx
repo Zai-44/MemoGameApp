@@ -1,17 +1,18 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import { Home, Pause, Play, RotateCcw, X } from 'lucide-react';
-import Image from 'next/image';
-import {AnimatedCardsBackground} from '@/components/AnimatedCardsBackground';
-import { Button } from '@/components/ui/button'; 
+import { useEffect, useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { Home, Pause, Play, RotateCcw, X } from "lucide-react";
+import Image from "next/image";
+import { AnimatedCardsBackground } from "@/components/AnimatedCardsBackground";
+import { Button } from "@/components/ui/button";
+import SoundController from "@/components/SoundController";
 
 type Card = {
-  id: number;     // índice único
+  id: number; // índice único
   pairId: number; // id de la pareja (0..11)
-  img: string;    // ruta imagen frontal
+  img: string; // ruta imagen frontal
   flipped: boolean;
   matched: boolean;
 };
@@ -19,7 +20,7 @@ type Card = {
 const TOTAL_CARDS = 24;
 const PAIRS = TOTAL_CARDS / 2;
 const INITIAL_REVEAL_MS = 3000; // mostrar todas al inicio (ms)
-const FLIP_BACK_MS = 900;       // tiempo antes de voltear cartas no emparejadas
+const FLIP_BACK_MS = 900; // tiempo antes de voltear cartas no emparejadas
 
 export default function GamePage() {
   const router = useRouter();
@@ -37,10 +38,20 @@ export default function GamePage() {
 
   const timerRef = useRef<number | null>(null);
   const lockRef = useRef(false); // evita clicks mientras se resuelve par/no-par
+   const flipSound = useRef<HTMLAudioElement | null>(null);
+
+  // Inicializar audio
+  useEffect(() => {
+    flipSound.current = new Audio("/sounds/flip.mp3");
+  }, []);
+
 
   // helper para generar cartas mezcladas
   const generateShuffled = (): Card[] => {
-    const base = Array.from({ length: PAIRS }, (_, i) => `/images/${i + 1}.png`);
+    const base = Array.from(
+      { length: PAIRS },
+      (_, i) => `/images/${i + 1}.png`
+    );
     const duplicated = [...base, ...base]; // 24 elementos: dos de cada imagen
     // crear objetos con pairId (0..11) y id único
     const withPair = duplicated.map((img, idx) => {
@@ -133,6 +144,9 @@ export default function GamePage() {
     const card = cards[index];
     if (card.matched || card.flipped) return; // no hacemos nada
 
+     // reproducir sonido de giro
+    flipSound.current?.play();
+
     // voltear la carta
     setCards((prev) => {
       const copy = [...prev];
@@ -162,7 +176,9 @@ export default function GamePage() {
         // match: marcar matched
         setTimeout(() => {
           setCards((prev) =>
-            prev.map((c, i) => (i === firstIndex || i === index ? { ...c, matched: true } : c))
+            prev.map((c, i) =>
+              i === firstIndex || i === index ? { ...c, matched: true } : c
+            )
           );
           // limpiar referencias
           setFirstIndex(null);
@@ -173,7 +189,9 @@ export default function GamePage() {
         // no coincide: voltearlas de nuevo después de FLIP_BACK_MS
         setTimeout(() => {
           setCards((prev) =>
-            prev.map((c, i) => (i === firstIndex || i === index ? { ...c, flipped: false } : c))
+            prev.map((c, i) =>
+              i === firstIndex || i === index ? { ...c, flipped: false } : c
+            )
           );
           setFirstIndex(null);
           setSecondIndex(null);
@@ -201,8 +219,8 @@ export default function GamePage() {
   const formatTime = (sec: number) => {
     const m = Math.floor(sec / 60)
       .toString()
-      .padStart(2, '0');
-    const s = (sec % 60).toString().padStart(2, '0');
+      .padStart(2, "0");
+    const s = (sec % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
 
@@ -213,7 +231,9 @@ export default function GamePage() {
     setCards(init);
     // mostrar por defecto y voltearlas
     setTimeout(() => {
-      setCards((prev) => prev.map((c) => ({ ...c, flipped: false, matched: false })));
+      setCards((prev) =>
+        prev.map((c) => ({ ...c, flipped: false, matched: false }))
+      );
     }, 800); // breve reveal inicial al cargar la página
     // limpia timer al desmontar (ya hecho arriba)
   }, []);
@@ -231,23 +251,39 @@ export default function GamePage() {
     <div className="relative min-h-screen overflow-hidden bg-gray-900 text-white">
       <AnimatedCardsBackground />
 
+      <SoundController />
       <div className="container mx-auto px-4 py-6 relative z-10">
         {/* HEADER */}
-        <div className="flex items-center justify-between mb-6">
-          {/* Botón casita -> ir a página principal */}
-          <Button
-            variant="ghost"
-            className="text-white"
-            onClick={() => router.push('/')}
+        <div className="flex items-center justify-between mb-6 relative">
+          {/* Botón de volver */}
+          <button
+            onClick={() => {
+              router.push("/");
+            }}
+            className="absolute top-4 left-4 w-10 h-10 border-4 border-red-700 rounded-full transition-transform transform hover:scale-110 hover:brightness-90 duration-300 ease-in-out"
+            aria-label="Volver"
           >
-            <Home className="w-6 h-6" />
-          </Button>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/9138/9138369.png"
+              alt="Volver"
+              className="w-full h-full object-contain"
+            />
+          </button>
 
-          <h1 className="text-3xl font-bold">MemoGame</h1> 
+          <div className="flex items-center md:w-[100px] justify-center flex-1">
+  <div className="relative w-60 h-30"></div>
+            <Image
+              src="/images/logo.svg"
+              alt="Logo MemoGame"
+              fill
+              style={{ objectFit: "contain" }}
+              priority
+            />
+          </div>
 
-          <div className="text-lg select-none">
+          <div className="text-lg select-none mr-40 text-right ">
             <div>Tiempo</div>
-            <div className="font-mono text-xl">{formatTime(time)}</div>
+            <div className=" ml-auto font-mono text-xl">{formatTime(time)}</div>
           </div>
         </div>
 
@@ -260,8 +296,7 @@ export default function GamePage() {
             }}
             className="bg-green-600 hover:bg-green-500"
           >
-            <RotateCcw className="w-4 h-4 mr-2" />
-            {isPlaying ? 'Reiniciar' : 'Comenzar'}
+            {isPlaying ? "Reiniciar" : "Comenzar"}
           </Button>
 
           {isPlaying && !revealing && (
@@ -282,14 +317,15 @@ export default function GamePage() {
           )}
 
           {/* Mostrar intentos en header control */}
-          <div className="ml-4 self-center text-white">Intentos: <span className="font-bold">{attempts}</span></div>
+          <div className="ml-4 self-center text-white">
+            Intentos: <span className="font-bold">{attempts}</span>
+          </div>
         </div>
 
         {/* TABLERO 6x4 */}
         <div className="grid grid-cols-6 gap-4 justify-items-center">
           {cards.map((card, idx) => (
-            <div key={card.id} className="w-full aspect-[3/4]">
-              <motion.div
+            <div key={card.id} className="w-full aspect-[3/4]">             <motion.div
                 onClick={() => onCardClick(idx)}
                 className="relative w-full h-full cursor-pointer"
                 style={{ perspective: 1000 }}
@@ -299,29 +335,39 @@ export default function GamePage() {
                   animate={{ rotateY: card.flipped || card.matched ? 180 : 0 }}
                   transition={{ duration: 0.55 }}
                   style={{
-                    transformStyle: 'preserve-3d',
+                    transformStyle: "preserve-3d",
                   }}
                 >
                   {/* FRONT - imagen (visible cuando rotateY=180) */}
                   <div
                     className="absolute inset-0 rounded-lg overflow-hidden"
                     style={{
-                      backfaceVisibility: 'hidden',
-                      transform: 'rotateY(180deg)',
+                      backfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
                     }}
                   >
-                    <Image src={card.img} alt="front" fill className="object-cover" />
+                    <Image
+                      src={card.img}
+                      alt="front"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
 
                   {/* BACK - contraportada */}
                   <div
                     className="absolute inset-0 rounded-lg overflow-hidden bg-gray-800 flex items-center justify-center"
                     style={{
-                      backfaceVisibility: 'hidden',
-                      transform: 'rotateY(0deg)',
+                      backfaceVisibility: "hidden",
+                      transform: "rotateY(0deg)",
                     }}
                   >
-                    <Image src="/images/Fondo.jpg" alt="back" fill className="object-cover" />
+                    <Image
+                      src="/images/Fondo.jpg"
+                      alt="back"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                 </motion.div>
               </motion.div>
@@ -341,14 +387,30 @@ export default function GamePage() {
               <X />
             </button>
             <h2 className="text-2xl font-bold mb-4">¡Juego completado!</h2>
-            <p className="mb-2">Tiempo: <span className="font-mono">{formatTime(time)}</span></p>
-            <p className="mb-4">Intentos: <span className="font-bold">{attempts}</span></p>
+            <p className="mb-2">
+              Tiempo: <span className="font-mono">{formatTime(time)}</span>
+            </p>
+            <p className="mb-4">
+              Intentos: <span className="font-bold">{attempts}</span>
+            </p>
 
             <div className="flex gap-3 justify-end">
-              <Button onClick={() => { setShowModal(false); router.push('/'); }} className="bg-gray-200">
+              <Button
+                onClick={() => {
+                  setShowModal(false);
+                  router.push("/");
+                }}
+                className="bg-gray-200"
+              >
                 Ir al inicio
               </Button>
-              <Button onClick={() => { setShowModal(false); handleRestart(); }} className="bg-green-600">
+              <Button
+                onClick={() => {
+                  setShowModal(false);
+                  handleRestart();
+                }}
+                className="bg-green-600"
+              >
                 Jugar otra vez
               </Button>
             </div>
