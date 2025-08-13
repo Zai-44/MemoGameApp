@@ -378,10 +378,10 @@ export default function GamePage() {
 
       {/* MODAL FINAL (flotante) */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-transparent bg-opacity-{100}">
           <div className="bg-white text-gray-900 rounded-xl p-6 w-[90%] max-w-md shadow-lg relative">
             <button
-              className="absolute top-3 right-3 text-gray-600"
+              className="absolute top-3 right-3 text-red-600"
               onClick={() => setShowModal(false)}
             >
               <X />
@@ -400,7 +400,7 @@ export default function GamePage() {
                   setShowModal(false);
                   router.push("/");
                 }}
-                className="bg-gray-200"
+                className="bg-blue-600"
               >
                 Ir al inicio
               </Button>
