@@ -38,6 +38,13 @@ export default function GamePage() {
 
   const timerRef = useRef<number | null>(null);
   const lockRef = useRef(false); // evita clicks mientras se resuelve par/no-par
+   const flipSound = useRef<HTMLAudioElement | null>(null);
+
+  // Inicializar audio
+  useEffect(() => {
+    flipSound.current = new Audio("/sounds/flip.mp3");
+  }, []);
+
 
   // helper para generar cartas mezcladas
   const generateShuffled = (): Card[] => {
@@ -136,6 +143,9 @@ export default function GamePage() {
 
     const card = cards[index];
     if (card.matched || card.flipped) return; // no hacemos nada
+
+     // reproducir sonido de giro
+    flipSound.current?.play();
 
     // voltear la carta
     setCards((prev) => {
@@ -250,7 +260,7 @@ export default function GamePage() {
             onClick={() => {
               router.push("/");
             }}
-            className="absolute top-4 left-4 w-16 h-16 border-4 border-red-700 rounded-full transition-transform transform hover:scale-110 hover:brightness-90 duration-300 ease-in-out"
+            className="absolute top-4 left-4 w-10 h-10 border-4 border-red-700 rounded-full transition-transform transform hover:scale-110 hover:brightness-90 duration-300 ease-in-out"
             aria-label="Volver"
           >
             <img
@@ -260,7 +270,8 @@ export default function GamePage() {
             />
           </button>
 
-          <div className="relative w-60 h-30 ml-125">
+          <div className="flex items-center md:w-[100px] justify-center flex-1">
+  <div className="relative w-60 h-30"></div>
             <Image
               src="/images/logo.svg"
               alt="Logo MemoGame"
@@ -314,8 +325,7 @@ export default function GamePage() {
         {/* TABLERO 6x4 */}
         <div className="grid grid-cols-6 gap-4 justify-items-center">
           {cards.map((card, idx) => (
-            <div key={card.id} className="w-full aspect-[3/4]">
-              <motion.div
+            <div key={card.id} className="w-full aspect-[3/4]">             <motion.div
                 onClick={() => onCardClick(idx)}
                 className="relative w-full h-full cursor-pointer"
                 style={{ perspective: 1000 }}
