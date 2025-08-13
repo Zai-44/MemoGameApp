@@ -73,31 +73,37 @@ export function GameCard() {
             </motion.button>
           </motion.div>
 
-          {/* Botón Ranking */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-             style={{ marginTop: '-20px' }}
-          >
-            <motion.button
-              onClick={() => router.push('/ranking')}
-              className="py-2  rounded-xl text-3xl ml-80"
-              style={{ 
-                backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                border: '2px solid',
-                backdropFilter: 'blur(5px)'
-              }}
-              whileHover={{ 
-                scale: 1.05,
-                backgroundColor: 'rgba(255, 255, 255, 0.25)',
-                boxShadow: '0 0 10px rgba(101, 125, 75, 0.5)'
-              }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Ranking
-            </motion.button>
-          </motion.div>
+          {/* Botón Instrucciones*/}
+<motion.div
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.8, duration: 0.5 }}
+  style={{ marginTop: '-20px' }}
+>
+    <motion.button
+      onClick={() => router.push('/ranking')}
+      className="py-2 text-3xl ml-100"  // Se quitó rounded-xl
+      style={{ 
+        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+        border: '2px solid',
+        backdropFilter: 'blur(5px)',
+        borderRadius: '50%',  // 🔵 Esto lo hace circular
+        width: '50px',        // 🟠 Asegura que sea un círculo perfecto (ajusta según necesidad)
+        height: '50px',       // 🟠 Mismo valor que width
+        display: 'flex',      // 🟢 Opcional: Centra el "?" correctamente
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+      whileHover={{ 
+        scale: 1.05,
+        backgroundColor: 'rgba(255, 255, 255, 0.25)',
+        boxShadow: '0 0 10px rgba(101, 125, 75, 0.5)'
+      }}
+      whileTap={{ scale: 0.98 }}
+    >
+      ? 
+    </motion.button>
+</motion.div>
 
 
         </div>

@@ -9,6 +9,8 @@ import SoundController from '@/components/SoundController';
 import { BotonCredit } from '@/components/BotonCredit';
 import { AnimatedCardsBackground } from '@/components/AnimatedCardsBackground';
 
+
+
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
   const router = useRouter();
@@ -87,7 +89,7 @@ export default function Home() {
             <BotonCredit
               icon={<Settings className="w-6 h-6" />}
               onClick={handleSettingsClick}
-              className="bg-amber-700 hover:bg-amber-700"
+              className="bg-blue-300 hover:bg-amber-700"
             />
             </div>
           </motion.div>
